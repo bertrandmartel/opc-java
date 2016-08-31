@@ -8,6 +8,16 @@ Open Pixel Control Library for Java/Android forked from https://github.com/scanl
 
 <hr/>
 
+## Include in your project
+
+* with Gradle, from jcenter :
+
+```
+compile 'com.github.akinaru:opc:1.0'
+```
+
+## Description
+
 Simple Java OPC client for the [Fadecandy](http://www.misc.name/fadecandy/).
 This is an alternative to the Processing client, providing a simpler interface similar to Adafruit's [NeoPixel library for Arduino](https://github.com/adafruit/Adafruit_NeoPixel).
 
