@@ -13,7 +13,7 @@ Open Pixel Control Library for Java/Android forked from https://github.com/scanl
 * with Gradle, from jcenter :
 
 ```
-compile 'com.github.akinaru:opc:1.0'
+compile 'com.github.akinaru:opc:1.01'
 ```
 
 ## Description
