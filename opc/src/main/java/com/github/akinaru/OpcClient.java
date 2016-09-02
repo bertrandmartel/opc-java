@@ -28,6 +28,7 @@ public class OpcClient implements AutoCloseable {
     protected boolean initialized = false;
     protected byte[] packetData;
     private boolean verbose = true;
+    private int socketTimeout = 5000;
 
     protected boolean interpolation = false;
 
@@ -220,6 +221,15 @@ public class OpcClient implements AutoCloseable {
     }
 
     /**
+     * Set socket timeout in milliseconds
+     *
+     * @param socketTimeout
+     */
+    public void setSocketTimeout(int socketTimeout) {
+        this.socketTimeout = socketTimeout;
+    }
+
+    /**
      * Open a socket connection to the Fadecandy server.
      */
     protected void open() {
@@ -227,6 +237,7 @@ public class OpcClient implements AutoCloseable {
             try {
                 socket = new Socket(this.host, this.port);
                 socket.setTcpNoDelay(true);
+                socket.setSoTimeout(socketTimeout);
                 output = socket.getOutputStream();
                 sendFirmwareConfigPacket();
             } catch (Exception e) {
