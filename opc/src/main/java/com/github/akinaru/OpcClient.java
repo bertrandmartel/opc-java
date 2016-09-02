@@ -1,6 +1,7 @@
 package com.github.akinaru;
 
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,8 @@ public class OpcClient implements AutoCloseable {
     protected boolean initialized = false;
     protected byte[] packetData;
     private boolean verbose = true;
-    private int socketTimeout = 5000;
+    private int soTimeout = 5000;
+    private int soConnTimeout = 5000;
 
     protected boolean interpolation = false;
 
@@ -223,10 +225,14 @@ public class OpcClient implements AutoCloseable {
     /**
      * Set socket timeout in milliseconds
      *
-     * @param socketTimeout
+     * @param soTimeout
      */
-    public void setSocketTimeout(int socketTimeout) {
-        this.socketTimeout = socketTimeout;
+    public void setSoTimeout(int soTimeout) {
+        this.soTimeout = soTimeout;
+    }
+
+    public void setSoConTimeout(int soConnTimeout) {
+        this.soConnTimeout = soConnTimeout;
     }
 
     /**
@@ -235,9 +241,10 @@ public class OpcClient implements AutoCloseable {
     protected void open() {
         if (this.output == null) {
             try {
-                socket = new Socket(this.host, this.port);
+                socket = new Socket();
+                socket.setSoTimeout(soTimeout);
+                socket.connect(new InetSocketAddress(this.host, this.port), soConnTimeout);
                 socket.setTcpNoDelay(true);
-                socket.setSoTimeout(socketTimeout);
                 output = socket.getOutputStream();
                 sendFirmwareConfigPacket();
             } catch (Exception e) {
