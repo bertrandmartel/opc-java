@@ -11,9 +11,9 @@ import java.util.List;
  * to replicate the interface provided by Adafruit's Neopixel library
  * for the Arduino.
  *
- * @see https://github.com/scanlime/fadecandy
- * @see https://github.com/adafruit/Adafruit_NeoPixel
- * @see https://github.com/akinaru/opc-java
+ * @link https://github.com/scanlime/fadecandy
+ * @link https://github.com/adafruit/Adafruit_NeoPixel
+ * @link https://github.com/akinaru/opc-java
  */
 public class OpcClient implements AutoCloseable {
 
@@ -32,6 +32,7 @@ public class OpcClient implements AutoCloseable {
     private boolean verbose = true;
     private int soTimeout = 5000;
     private int soConnTimeout = 5000;
+    private List<ISocketListener> listenerList = new ArrayList<ISocketListener>();
 
     protected boolean interpolation = false;
 
@@ -92,7 +93,16 @@ public class OpcClient implements AutoCloseable {
     }
 
     // Send a packet with the current color correction settings
-    public void setColorCorrectionPacket(float gamma, float red, float green, float blue) {
+
+    /**
+     * Set color correction
+     *
+     * @param gamma gamma correction
+     * @param red   color correction for red
+     * @param green color correction for green
+     * @param blue  color correction for blue
+     */
+    public void setColorCorrection(float gamma, float red, float green, float blue) {
 
         String colorCorrection = "{ \"gamma\": " + gamma + ", \"whitepoint\": [" + red + "," + green + "," + blue +
                 "]}";
@@ -100,6 +110,11 @@ public class OpcClient implements AutoCloseable {
         setColorCorrection(colorCorrection);
     }
 
+    /**
+     * Prepare and write color correction packet.
+     *
+     * @param colorCorrection color correction JSON request
+     */
     private void setColorCorrection(String colorCorrection) {
 
         if (colorCorrection == null) {
@@ -211,20 +226,7 @@ public class OpcClient implements AutoCloseable {
     }
 
     /**
-     * Print a message out to the console.
-     */
-    protected void log(String msg, Exception e) {
-        if (!verbose) {
-            return;
-        }
-        System.out.println(msg);
-        if (e != null) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Set socket timeout in milliseconds
+     * Set socket timeout in milliseconds.
      *
      * @param soTimeout
      */
@@ -232,8 +234,31 @@ public class OpcClient implements AutoCloseable {
         this.soTimeout = soTimeout;
     }
 
+    /**
+     * set socket connection timeout in milliseconds.
+     *
+     * @param soConnTimeout
+     */
     public void setSoConTimeout(int soConnTimeout) {
         this.soConnTimeout = soConnTimeout;
+    }
+
+    /**
+     * add a socket listener.
+     *
+     * @param listener socket listener
+     */
+    public void addSocketListener(ISocketListener listener) {
+        listenerList.add(listener);
+    }
+
+    /**
+     * remove socket listener.
+     *
+     * @param listener socket listener
+     */
+    public void removeSocketListener(ISocketListener listener) {
+        listenerList.add(listener);
     }
 
     /**
@@ -250,7 +275,9 @@ public class OpcClient implements AutoCloseable {
                 output = socket.getOutputStream();
                 sendFirmwareConfigPacket();
             } catch (Exception e) {
-                log("open: error: " + e, e);
+                for (ISocketListener listener : listenerList) {
+                    listener.onSocketError(e);
+                }
                 this.close();
             }
         }
@@ -261,8 +288,8 @@ public class OpcClient implements AutoCloseable {
      * interpolation and dithering.
      */
     protected void sendFirmwareConfigPacket() {
+
         if (output == null) {
-            log("sendFirmwareConfigPacket: no socket", null);
             return;
         }
 
@@ -356,15 +383,14 @@ public class OpcClient implements AutoCloseable {
      * Push a pixel buffer out the socket to the Fadecandy.
      */
     protected void writePixels(byte[] packetData) {
+
         if (packetData == null || packetData.length == 0) {
-            log("writePixels: no packet data", null);
             return;
         }
         if (output == null) {
             open();
         }
         if (output == null) {
-            log("writePixels: no socket", null);
             return;
         }
 
@@ -372,7 +398,9 @@ public class OpcClient implements AutoCloseable {
             output.write(packetData);
             output.flush();
         } catch (Exception e) {
-            log("writePixels: error : " + e, e);
+            for (ISocketListener listener : listenerList) {
+                listener.onSocketError(e);
+            }
             close();
         }
     }
