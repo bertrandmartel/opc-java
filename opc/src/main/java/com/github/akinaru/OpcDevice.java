@@ -59,9 +59,16 @@ public class OpcDevice {
         return redrawNeeded;
     }
 
-    // Set the color correction parameters
+    /**
+     * Write color correction.
+     *
+     * @param gamma gamma correction
+     * @param red   correction for red color
+     * @param green correction for green color
+     * @param blue  correction for blue color
+     */
     public void setColorCorrection(float gamma, float red, float green, float blue) {
-        opcClient.setColorCorrectionPacket(gamma, red, green, blue);
+        opcClient.setColorCorrection(gamma, red, green, blue);
     }
 
     /**
