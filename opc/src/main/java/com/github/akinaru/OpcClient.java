@@ -364,14 +364,14 @@ public class OpcClient implements AutoCloseable {
     /**
      * Push all pixel changes to the strip.
      */
-    public void show() {
+    public int show() {
         if (!initialized) {
             init();
         }
         if (this.output != null) {
             this.open();
         }
-        writePixels(packetData);
+        return writePixels(packetData);
     }
 
     @Override
@@ -382,16 +382,16 @@ public class OpcClient implements AutoCloseable {
     /**
      * Push a pixel buffer out the socket to the Fadecandy.
      */
-    protected void writePixels(byte[] packetData) {
+    protected int writePixels(byte[] packetData) {
 
         if (packetData == null || packetData.length == 0) {
-            return;
+            return -1;
         }
         if (output == null) {
             open();
         }
         if (output == null) {
-            return;
+            return -1;
         }
 
         try {
@@ -402,7 +402,10 @@ public class OpcClient implements AutoCloseable {
                 listener.onSocketError(e);
             }
             close();
+
+            return -1;
         }
+        return 0;
     }
 
     /**
