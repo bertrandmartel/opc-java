@@ -2,7 +2,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group 'com.github.akinaru'
-version '1.03'
+version '1.04'
 
 apply plugin: 'java'
 
