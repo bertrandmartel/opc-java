@@ -72,15 +72,15 @@ public class OpcClient implements AutoCloseable {
      *
      * @return whether a {@code show} operation was executed.
      */
-    public boolean animate() {
+    public int animate() {
         boolean redrawNeeded = false;
         for (OpcDevice device : deviceList) {
             redrawNeeded |= device.animate();
         }
         if (redrawNeeded) {
-            this.show();
+            return this.show();
         }
-        return redrawNeeded;
+        return 0;
     }
 
     /**
@@ -102,12 +102,12 @@ public class OpcClient implements AutoCloseable {
      * @param green color correction for green
      * @param blue  color correction for blue
      */
-    public void setColorCorrection(float gamma, float red, float green, float blue) {
+    public int setColorCorrection(float gamma, float red, float green, float blue) {
 
         String colorCorrection = "{ \"gamma\": " + gamma + ", \"whitepoint\": [" + red + "," + green + "," + blue +
                 "]}";
 
-        setColorCorrection(colorCorrection);
+        return setColorCorrection(colorCorrection);
     }
 
     /**
@@ -115,11 +115,11 @@ public class OpcClient implements AutoCloseable {
      *
      * @param colorCorrection color correction JSON request
      */
-    private void setColorCorrection(String colorCorrection) {
+    private int setColorCorrection(String colorCorrection) {
 
         if (colorCorrection == null) {
             // No color correction defined
-            return;
+            return -1;
         }
 
         byte[] content = colorCorrection.getBytes();
@@ -134,8 +134,15 @@ public class OpcClient implements AutoCloseable {
         header[6] = (byte) 0x00;               // Command ID high byte
         header[7] = (byte) 0x01;               // Command ID low byte
 
-        writePixels(header);
-        writePixels(content);
+        int status = 0;
+
+        status = writePixels(header);
+        if (status == -1) {
+            return -1;
+        }
+        status = writePixels(content);
+
+        return status;
     }
 
     @Override

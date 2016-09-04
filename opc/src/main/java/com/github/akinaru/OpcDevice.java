@@ -67,8 +67,8 @@ public class OpcDevice {
      * @param green correction for green color
      * @param blue  correction for blue color
      */
-    public void setColorCorrection(float gamma, float red, float green, float blue) {
-        opcClient.setColorCorrection(gamma, red, green, blue);
+    public int setColorCorrection(float gamma, float red, float green, float blue) {
+        return opcClient.setColorCorrection(gamma, red, green, blue);
     }
 
     /**
