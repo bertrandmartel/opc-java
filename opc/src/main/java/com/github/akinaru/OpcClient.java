@@ -33,6 +33,7 @@ public class OpcClient implements AutoCloseable {
     private int soTimeout = 5000;
     private int soConnTimeout = 5000;
     private List<ISocketListener> listenerList = new ArrayList<ISocketListener>();
+    private boolean mReuseAddress;
 
     protected boolean interpolation = false;
 
@@ -268,6 +269,10 @@ public class OpcClient implements AutoCloseable {
         listenerList.add(listener);
     }
 
+    public void setReuseAddress(boolean reuseAddress) {
+        mReuseAddress = reuseAddress;
+    }
+
     /**
      * Open a socket connection to the Fadecandy server.
      */
@@ -277,6 +282,7 @@ public class OpcClient implements AutoCloseable {
             try {
                 socket = new Socket();
                 socket.setSoTimeout(soTimeout);
+                socket.setReuseAddress(mReuseAddress);
                 socket.connect(new InetSocketAddress(this.host, this.port), soConnTimeout);
                 socket.setTcpNoDelay(true);
                 output = socket.getOutputStream();
