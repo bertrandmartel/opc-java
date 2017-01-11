@@ -1,4 +1,4 @@
-package com.github.akinaru;
+package fr.bmartel.opc;
 
 /**
  * Represents one strip of pixels, no larger than 64 pixels.

@@ -1,7 +1,7 @@
 # Open Pixel Control Library 
 
-[![Build Status](https://travis-ci.org/akinaru/opc-java.svg?branch=master)](https://travis-ci.org/akinaru/opc-java)
-[ ![Download](https://api.bintray.com/packages/akinaru/maven/opc-java/images/download.svg) ](https://bintray.com/akinaru/maven/opc-java/_latestVersion)
+[![Build Status](https://travis-ci.org/bertrandmartel/opc-java.svg?branch=master)](https://travis-ci.org/bertrandmartel/opc-java)
+[ ![Download](https://api.bintray.com/packages/bertrandmartel/maven/opc-java/images/download.svg) ](https://bintray.com/bertrandmartel/maven/opc-java/_latestVersion)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE.md)
 
 Open Pixel Control Library for Java/Android forked from https://github.com/scanlime/fadecandy/tree/master/examples/java
@@ -13,7 +13,7 @@ Open Pixel Control Library for Java/Android forked from https://github.com/scanl
 * with Gradle, from jcenter :
 
 ```
-compile 'com.github.akinaru:opc:1.08'
+compile 'fr.bmartel:opc:1.08'
 ```
 
 ## Description

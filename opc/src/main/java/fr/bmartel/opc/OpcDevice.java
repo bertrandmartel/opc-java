@@ -1,4 +1,4 @@
-package com.github.akinaru;
+package fr.bmartel.opc;
 
 import java.util.ArrayList;
 import java.util.List;

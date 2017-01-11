@@ -33,20 +33,20 @@ task findConventions << {
 task pulsing(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     classpath += sourceSets.main.resources
-    main = "com.github.akinaru.examples.Pulsing"
+    main = "fr.bmartel.opc.examples.Pulsing"
     args ""
 }
 
 task spark(type: JavaExec) {
     classpath sourceSets.test.runtimeClasspath
-    main = "com.github.akinaru.examples.Spark"
+    main = "fr.bmartel.opc.examples.Spark"
     args ""
 }
 
 task theaterLights(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     classpath += sourceSets.main.resources
-    main = "com.github.akinaru.examples.TheaterLights"
+    main = "fr.bmartel.opc.examples.TheaterLights"
     args ""
 }
 

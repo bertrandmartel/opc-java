@@ -1,4 +1,4 @@
-package com.github.akinaru;
+package fr.bmartel.opc;
 
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @link https://github.com/scanlime/fadecandy
  * @link https://github.com/adafruit/Adafruit_NeoPixel
- * @link https://github.com/akinaru/opc-java
+ * @link https://github.com/bertrandmartel/opc-java
  */
 public class OpcClient implements AutoCloseable {
 

@@ -1,8 +1,8 @@
-package com.github.akinaru.examples;
+package fr.bmartel.opc.examples;
 
-import com.github.akinaru.OpcClient;
-import com.github.akinaru.OpcDevice;
-import com.github.akinaru.PixelStrip;
+import fr.bmartel.opc.OpcClient;
+import fr.bmartel.opc.OpcDevice;
+import fr.bmartel.opc.PixelStrip;
 
 /**
  * Pixel strip test.
