@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/bertrandmartel/opc-java.svg?branch=master)](https://travis-ci.org/bertrandmartel/opc-java)
 [ ![Download](https://api.bintray.com/packages/bertrandmartel/maven/opc-java/images/download.svg) ](https://bintray.com/bertrandmartel/maven/opc-java/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/fr.bmartel/opc/badge.svg)](https://maven-badges.herokuapp.com/maven-central/fr.bmartel/opc)
+[![Javadoc](http://javadoc-badge.appspot.com/fr.bmartel/opc.svg?label=javadoc)](http://javadoc-badge.appspot.com/fr.bmartel/opc)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE.md)
 
 Open Pixel Control Library for Java/Android forked from https://github.com/scanlime/fadecandy/tree/master/examples/java
